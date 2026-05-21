@@ -15,7 +15,7 @@
 
 ## Purpose
 
-This project is an exploration of how GenAI improve the data engineering process. I think GenAI offers a major improvement in efficiency, and potentially also in the overall quality of your data solution.
+This project is an exploration of how GenAI improve the data engineering process. GenAI offers a major improvement in efficiency, and potentially also in the overall quality of your data solution.
 
 Let's start by describing a new way of working when using GenAI. In my case I use the Cursor 3.4 IDE.
 
@@ -52,7 +52,7 @@ Fortunately there is a well-defined open-source standard to describe source-to-t
 
 ### Design patterns for specifying intent
 
-In [*Data Engine Thinking*](https://dataenginethinking.com/), Roelant Vos and Dirk Lerner describe generic design patterns for building a data solution. Those patterns are a strong way to specify intent: they are technology-agnostic and encode industry best practices. A working collection of such patterns lives in the companion repository [data-engineering-design-patterns](../data-engineering-design-patterns/).
+In [*Data Engine Thinking*](https://dataenginethinking.com/), Roelant Vos and Dirk Lerner describe generic design patterns for building a data solution. Those patterns are a strong way to specify intent: they are technology-agnostic and encode industry best practices. A working collection of such patterns lives in the companion repository [data-engineering-design-patterns](https://github.com/basvdberg/data-engineering-design-patterns).
 
 ## Summary 
 
@@ -60,7 +60,7 @@ GenAI demands well-written documentation and a clear, unambiguous specification 
 
 ## Proof of concept
 
-This project [data-solution-2026](../data-solution-2026/) describes a proof of concept that explores the new way of working that is described on this page.
+The [data-solution-2026](https://github.com/basvdberg/data-solution-2026) repository describes a proof of concept that explores the new way of working that is described on this page.
 
 ## Project structure
 
