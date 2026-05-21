@@ -17,7 +17,7 @@
 
 This project is an exploration of how GenAI improve the data engineering process. GenAI offers a major improvement in efficiency, and potentially also in the overall quality of your data solution.
 
-Let's start by describing a new way of working when using GenAI. In my case I use the Cursor 3.4 IDE.
+Let's start by describing a new way of working using GenAI. In my case I use the Cursor 3.4 IDE.
 
 ## The role of documentation
 
