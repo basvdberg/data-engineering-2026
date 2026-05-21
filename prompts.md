@@ -22,6 +22,14 @@ This document contains the prompts used to generate and refine the content in **
 
 9. Change the project structure skill to include links to all repositories on GitHub that have incoming or outgoing references.Only the current repository should be expanded.
 
-10. Change the project structure skill to include links to all repositories on GitHub that have incoming or outgoing references.Only the current repository should be expanded.
+10. Related repositories should be at the top level of this project structure tree.Change the skill.
 
-11. @data-engineering-2026/update_markdown_docs.py @data-engineering-2026/update_prompts.py I think these files can now be deleted.
+11. Create a new project called **cursor-config**.Move all scripts to this repo and all.git pre-commit hooks and all skills that exist in my user directory so that I have full versioning of this reference this repo where needed.
+
+12. @data-engineering-2026/update_markdown_docs.py @data-engineering-2026/update_prompts.py I think these files can now be deleted.
+
+13. Check for other files that can be deleted. Also delete the.git hooks empty folders.
+
+14. Always exclude cursor_config repo as a related repository.
+
+15. Create a LinkedIn post that summarizes the Data Engineering 2026 repo, including a link.

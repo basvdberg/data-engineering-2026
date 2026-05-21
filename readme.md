@@ -48,7 +48,7 @@ So documentation is the gasoline that fires the GenAI motor. One of the pitfalls
 
 ### DSA for defining data transformations
 
-Fortunately there is a well-defined open-source standard to describe source-to-target mappings, data objects, and connections: the [Data Solution Automation (DSA) metadata schema](https://github.com/data-solution-automation-engine/data-warehouse-automation-metadata-schema). The standard describes data transformations in readable JSON files. [Agnostic Data Labs (ADL)](https://docs.agnosticdatalabs.com/docs/) can visualize those files and generate code from Handlebars templates.
+Fortunately there is a well-defined open-source standard to describe source-to-target mappings, data objects, and connections: the [Data Solution Automation (DSA) metadata schema](https://github.com/data-solution-automation-engine/data-warehouse-automation-metadata-schema). The standard describes data transformations in readable JSON files. [Agnostic Data Labs (ADL)](https://docs.agnosticdatalabs.com/docs/) can visualize those files and generate code from Handlebars templates. However, the question is whether to generate this code using this ADL tool or GenAI.
 
 ### Design patterns for specifying intent
 
