@@ -44,3 +44,11 @@ CI/CD shifts — generated code replaces hand-written; docs become the specifica
 Specify what, not how — declarative standards (e.g. DSA metadata) and technology-agnostic design patterns reduce ambiguity so agents don’t wander.
 The repo walks through this way of working (including diagrams on the old vs new data-engineering cycle), links to the Data Engineering Design Patterns collection, and points to a Data Solution 2026 proof of concept that puts the ideas into practice. This POC is in progress. I will report the lessons learned in the near future. 
 #DataEngineering #GenAI #DataArchitecture #DataSolution #DesignPatterns #CodeSpecification
+
+## Session 2
+
+1. Change the project structure skill to exclude links to repositories that are private and always include a very small description of the repository.
+
+2. Replace the related repositories paragraph in this document by project structure using the skill.
+
+3. Update SKILL to create project structure to exclude private repositories in the related repository section.

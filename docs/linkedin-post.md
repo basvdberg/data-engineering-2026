@@ -31,6 +31,6 @@ The repo walks through this way of working with diagrams (old vs new data-engine
   - Docs
     - [LinkedIn post](linkedin-post.md)
 - Related repositories
-  - [Data Engineering Design Patterns](https://github.com/basvdberg/data-engineering-design-patterns)
-  - [Data Solution 2026](https://github.com/basvdberg/data-solution-2026)
+  - [Data Engineering Design Patterns](https://github.com/basvdberg/data-engineering-design-patterns) — Design pattern catalogue
+  - [Data Solution 2026](https://github.com/basvdberg/data-solution-2026) — Data solution proof of concept
 <!-- markdown-project-structure:end -->
