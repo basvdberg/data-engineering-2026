@@ -67,6 +67,7 @@ The [data-solution-2026](https://github.com/basvdberg/data-solution-2026) reposi
 <!-- markdown-project-structure:start -->
 - [Data Engineering 2026](readme.md)
   - Docs
+    - [LinkedIn post](docs/linkedin-post.md)
 - Related repositories
   - [Data Engineering Design Patterns](https://github.com/basvdberg/data-engineering-design-patterns)
   - [Data Solution 2026](https://github.com/basvdberg/data-solution-2026)

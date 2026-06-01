@@ -33,3 +33,14 @@ This document contains the prompts used to generate and refine the content in **
 14. Always exclude cursor_config repo as a related repository.
 
 15. Create a LinkedIn post that summarizes the Data Engineering 2026 repo, including a link.
+
+16. Review this linkedin post:
+How is GenAI changing data engineering—not just coding faster, but how we design, document, and deliver?
+I’ve started capturing that in an open repo: https://github.com/basvdberg/data-engineering-2026
+The core idea: treat documentation and intent as fuel for GenAI, not paperwork you finish after go-live.
+
+Documentation first — update design and decisions before implementation; AI drafts quickly, you review intent, then code follows.
+CI/CD shifts — generated code replaces hand-written; docs become the specification that drives generation.
+Specify what, not how — declarative standards (e.g. DSA metadata) and technology-agnostic design patterns reduce ambiguity so agents don’t wander.
+The repo walks through this way of working (including diagrams on the old vs new data-engineering cycle), links to the Data Engineering Design Patterns collection, and points to a Data Solution 2026 proof of concept that puts the ideas into practice. This POC is in progress. I will report the lessons learned in the near future. 
+#DataEngineering #GenAI #DataArchitecture #DataSolution #DesignPatterns #CodeSpecification
