@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gen AI and Data Engineering — Architecture</title>
+  <meta name="description" content="A three-layer architecture for Gen AI-driven data engineering: specification of intent, code and configuration, and standard tools.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Gen AI and Data Engineering — Architecture">
+  <meta property="og:description" content="The data engineer steers declarative intent into generated code on standard tools. Design patterns specify what; Gen AI produces how.">
+  <meta property="og:url" content="https://basvdberg.github.io/data-engineering-2026/genai-data-engineering-architecture.html">
+  <meta property="og:image" content="https://basvdberg.github.io/data-engineering-2026/genai-data-engineering-architecture.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Gen AI and Data Engineering — Architecture">
+  <meta name="twitter:description" content="A three-layer architecture for Gen AI-driven data engineering.">
+  <meta name="twitter:image" content="https://basvdberg.github.io/data-engineering-2026/genai-data-engineering-architecture.svg">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #ffffff;
+      --bg-elevated: #f6f8fa;
+      --bg-header: #eaeef2;
+      --bg-editor: #ffffff;
+      --bg-highlight: #ddf4ff;
+      --text-primary: #1f2328;
+      --text-secondary: #656d76;
+      --text-tertiary: #8b949e;
+      --accent: #0969da;
+      --accent-text: #ffffff;
+      --stroke: #d0d7de;
+      --stroke-accent: #0969da;
+      --font: "Segoe UI", system-ui, -apple-system, sans-serif;
+      --radius: 10px;
+      --radius-sm: 6px;
+      --max-width: 720px;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0d1117;
+      --bg-elevated: #161b22;
+      --bg-header: #21262d;
+      --bg-editor: #0d1117;
+      --bg-highlight: #13253b;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-tertiary: #6e7681;
+      --accent: #4493f8;
+      --stroke: #30363d;
+      --stroke-accent: #4493f8;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 32px 20px 48px;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 13px;
+    }
+
+    .toolbar-links a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .toolbar-links a:hover { text-decoration: underline; }
+
+    .btn {
+      border: 1px solid var(--stroke);
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      border-radius: var(--radius-sm);
+      padding: 6px 12px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .hero p {
+      margin: 0 auto;
+      max-width: 640px;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .engineer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin: 24px 0 8px;
+    }
+
+    .engineer-label {
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .engineer-sub {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .arrow {
+      display: flex;
+      justify-content: center;
+      margin: 4px 0;
+      color: var(--text-tertiary);
+    }
+
+    .arrow.accent { color: var(--accent); }
+
+    .layer {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      background: var(--bg-elevated);
+      overflow: hidden;
+      transition: border-color 0.15s ease;
+    }
+
+    .layer.accent {
+      border-color: var(--stroke-accent);
+      background: var(--bg-highlight);
+    }
+
+    .layer-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--stroke);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .layer-header:hover { background: var(--bg-elevated); }
+
+    .layer-number {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      flex-shrink: 0;
+    }
+
+    .layer.accent .layer-number {
+      background: var(--accent);
+      color: var(--accent-text);
+    }
+
+    .layer-title {
+      flex: 1;
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .layer-toggle {
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    .layer-body {
+      padding: 16px;
+    }
+
+    .layer.collapsed .layer-body { display: none; }
+    .layer.collapsed .layer-header { border-bottom: none; }
+
+    .layer-desc {
+      margin: 0 0 12px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .source-box {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--stroke);
+      background: var(--bg-editor);
+      cursor: pointer;
+      transition: border-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .source-box:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .source-box.active {
+      border-color: var(--accent);
+      background: var(--bg-highlight);
+    }
+
+    .source-box.highlighted {
+      border-color: var(--stroke-accent);
+      background: var(--bg-highlight);
+    }
+
+    .source-box h3 {
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .source-box.highlighted h3,
+    .source-box.active h3 { color: var(--accent); }
+
+    .source-box ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .source-box li {
+      font-size: 12px;
+      color: var(--text-secondary);
+      padding: 2px 0;
+    }
+
+    .detail-panel {
+      display: none;
+      margin: 0 0 12px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--stroke-accent);
+      background: var(--bg-highlight);
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .detail-panel.visible { display: block; }
+
+    .detail-panel strong { color: var(--text-primary); }
+
+    .detail-panel a { color: var(--accent); }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      border: 1px solid var(--stroke);
+      background: var(--bg-editor);
+      color: var(--text-secondary);
+    }
+
+    .pill.accent {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--accent-text);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .chip {
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      border: 1px solid var(--stroke);
+      background: var(--bg-editor);
+      color: var(--text-secondary);
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .footnote {
+      max-width: var(--max-width);
+      margin: 24px auto 0;
+      padding: 12px 16px;
+      border: 1px dashed var(--stroke);
+      border-radius: 8px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    .genai-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--stroke-accent);
+      background: var(--bg-elevated);
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .genai-badge strong {
+      display: block;
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    .genai-badge span {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="toolbar">
+      <div class="toolbar-links">
+        <a href="https://github.com/basvdberg/data-engineering-2026">Data Engineering 2026</a>
+        <a href="https://github.com/basvdberg/data-engineering-design-patterns">Design patterns</a>
+        <a href="https://github.com/basvdberg/data-solution-2026">Proof of concept</a>
+      </div>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle theme">Theme</button>
+    </div>
+
+    <header class="hero">
+      <h1>Gen AI and Data Engineering</h1>
+      <p>The data engineer steers a three-layer stack: declarative intent at the top, generated code in the middle, standard tools at the bottom.</p>
+    </header>
+
+    <div class="engineer">
+      <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true">
+        <circle cx="36" cy="36" r="34" stroke="var(--accent)" stroke-width="2" fill="var(--bg-elevated)"/>
+        <circle cx="36" cy="26" r="10" stroke="var(--accent)" stroke-width="2" fill="none"/>
+        <path d="M18 58c0-10 8-16 18-16s18 6 18 16" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <rect x="28" y="40" width="16" height="12" rx="2" stroke="var(--accent)" stroke-width="1.5" fill="none"/>
+        <path d="M32 46h8M36 42v8" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div class="engineer-label">Data Engineer</div>
+      <div class="engineer-sub">Defines intent, reviews output, owns the solution</div>
+    </div>
+
+    <div class="arrow" aria-hidden="true">
+      <svg width="24" height="32" viewBox="0 0 24 32" fill="none"><path d="M12 2v22M6 18l6 8 6-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <section class="layer accent" id="layer-1">
+      <div class="layer-header" data-toggle="layer-1">
+        <div class="layer-number">1</div>
+        <h2 class="layer-title">Specification of intent</h2>
+        <span class="layer-toggle" aria-hidden="true">Click to collapse</span>
+      </div>
+      <div class="layer-body">
+        <p class="layer-desc">Technology-agnostic, declarative description of <em>what</em> the solution must do — not how it is built.</p>
+        <div id="detail-panel" class="detail-panel" role="status" aria-live="polite"></div>
+        <div class="source-grid">
+          <div class="source-box highlighted" tabindex="0" role="button"
+               data-detail="Generic patterns from <a href='https://github.com/basvdberg/data-engineering-design-patterns/tree/main/design-patterns/generic'>data-engineering-design-patterns</a>. They separate <em>what</em> from <em>how</em> and keep solutions technology-agnostic — ideal input for Gen AI."
+               data-title="Design patterns — Generic">
+            <h3>Design patterns — Generic</h3>
+            <ul>
+              <li>Separate what and how</li>
+              <li>Functional decomposition</li>
+              <li>Prefer simple decomposition</li>
+              <li>Simplicity</li>
+            </ul>
+          </div>
+          <div class="source-box" tabindex="0" role="button"
+               data-detail="Data-engineering patterns name concepts used in data solutions: extractors, objects, layers, and orchestration. See the <a href='https://github.com/basvdberg/data-engineering-design-patterns/tree/main/design-patterns/data-engineering'>catalogue</a>."
+               data-title="Design patterns — Data engineering">
+            <h3>Design patterns — Data engineering</h3>
+            <ul>
+              <li>Data extractor</li>
+              <li>Data object &amp; poller</li>
+              <li>Data solution layers</li>
+              <li>Event-based orchestration</li>
+            </ul>
+          </div>
+          <div class="source-box" tabindex="0" role="button"
+               data-detail="Architecture decisions, <a href='https://github.com/data-solution-automation-engine/data-warehouse-automation-metadata-schema'>DSA metadata</a> for transformations, and runbooks keep intent explicit and reviewable before code is generated."
+               data-title="Documentation &amp; standards">
+            <h3>Documentation &amp; standards</h3>
+            <ul>
+              <li>Architecture decisions</li>
+              <li>DSA metadata (transformations)</li>
+              <li>Release notes &amp; runbooks</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pills">
+          <span class="pill accent">Declarative</span>
+          <span class="pill">Technology-agnostic</span>
+          <span class="pill">AI-ready vocabulary</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="stack" style="margin: 8px 0;">
+      <div class="arrow accent" aria-hidden="true">
+        <svg width="24" height="32" viewBox="0 0 24 32" fill="none"><path d="M12 2v22M6 18l6 8 6-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="genai-badge">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <path d="M14 3l2.2 6.8H23l-5.5 4 2.1 6.8L14 16.6 8.4 20.6l2.1-6.8L5 9.8h6.8L14 3z" stroke="var(--accent)" stroke-width="1.5" fill="none"/>
+          <circle cx="14" cy="14" r="3" fill="var(--accent)"/>
+        </svg>
+        <div>
+          <strong>Generative AI</strong>
+          <span>Translates declarative intent into implementation</span>
+        </div>
+      </div>
+      <div class="arrow accent" aria-hidden="true">
+        <svg width="24" height="32" viewBox="0 0 24 32" fill="none"><path d="M12 2v22M6 18l6 8 6-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+
+    <section class="layer" id="layer-2">
+      <div class="layer-header" data-toggle="layer-2">
+        <div class="layer-number">2</div>
+        <h2 class="layer-title">Code and configuration</h2>
+        <span class="layer-toggle" aria-hidden="true">Click to collapse</span>
+      </div>
+      <div class="layer-body">
+        <p class="layer-desc">Generated and reviewed implementation — the <em>how</em> on a concrete stack.</p>
+        <div class="chips">
+          <span class="chip">Python modules</span>
+          <span class="chip">SQL &amp; migrations</span>
+          <span class="chip">Airflow DAGs</span>
+          <span class="chip">Docker &amp; compose</span>
+          <span class="chip">CI/CD workflows</span>
+          <span class="chip">Tests &amp; hooks</span>
+          <span class="chip">Environment config</span>
+        </div>
+        <p style="margin:0;font-size:12px;color:var(--text-tertiary);">Hand-written code gives way to AI-generated code, steered by the specification above.</p>
+      </div>
+    </section>
+
+    <div class="arrow" aria-hidden="true">
+      <svg width="24" height="32" viewBox="0 0 24 32" fill="none"><path d="M12 2v22M6 18l6 8 6-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <section class="layer" id="layer-3">
+      <div class="layer-header" data-toggle="layer-3">
+        <div class="layer-number">3</div>
+        <h2 class="layer-title">Standard tools</h2>
+        <span class="layer-toggle" aria-hidden="true">Click to collapse</span>
+      </div>
+      <div class="layer-body">
+        <p class="layer-desc">Proven, off-the-shelf platforms that execute the generated solution in production.</p>
+        <div class="chips">
+          <span class="chip">Apache Airflow</span>
+          <span class="chip">PostgreSQL</span>
+          <span class="chip">Docker</span>
+          <span class="chip">GitHub Actions</span>
+          <span class="chip">NGINX</span>
+          <span class="chip">Cursor IDE</span>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footnote">
+      Data Engineering 2026 · Design patterns from
+      <a href="https://github.com/basvdberg/data-engineering-design-patterns">data-engineering-design-patterns</a>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var stored = localStorage.getItem("de2026-theme");
+      var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (stored === "dark" || (!stored && prefersDark)) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+
+      document.getElementById("theme-toggle").addEventListener("click", function () {
+        var isDark = document.documentElement.getAttribute("data-theme") === "dark";
+        if (isDark) {
+          document.documentElement.removeAttribute("data-theme");
+          localStorage.setItem("de2026-theme", "light");
+        } else {
+          document.documentElement.setAttribute("data-theme", "dark");
+          localStorage.setItem("de2026-theme", "dark");
+        }
+      });
+
+      document.querySelectorAll("[data-toggle]").forEach(function (header) {
+        header.addEventListener("click", function () {
+          var layer = document.getElementById(header.getAttribute("data-toggle"));
+          layer.classList.toggle("collapsed");
+          var toggle = header.querySelector(".layer-toggle");
+          toggle.textContent = layer.classList.contains("collapsed") ? "Click to expand" : "Click to collapse";
+        });
+      });
+
+      var panel = document.getElementById("detail-panel");
+      document.querySelectorAll(".source-box").forEach(function (box) {
+        function activate() {
+          document.querySelectorAll(".source-box").forEach(function (b) { b.classList.remove("active"); });
+          box.classList.add("active");
+          panel.innerHTML = "<strong>" + box.getAttribute("data-title") + ".</strong> " + box.getAttribute("data-detail");
+          panel.classList.add("visible");
+        }
+        box.addEventListener("click", activate);
+        box.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            activate();
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

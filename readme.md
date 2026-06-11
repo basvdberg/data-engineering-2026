@@ -4,6 +4,7 @@
 
 <!-- markdown-toc:start -->
 - [Purpose](#purpose)
+- [Architecture](#architecture)
 - [The role of documentation](#the-role-of-documentation)
 - [New CI/CD process](#new-cicd-process)
 - [Specification of intent](#specification-of-intent)
@@ -18,6 +19,21 @@
 This project explores how GenAI can improve the data engineering process. GenAI offers a major gain in efficiency and can raise the overall quality of your data solution.
 
 Let's start by describing a new way of working using GenAI. In my case I use the Cursor 3.4 IDE.
+
+## Architecture
+
+The data engineer steers a three-layer stack. At the top, **specification of intent** captures *what* the solution must do — sourced from generic and data-engineering design patterns. Generative AI translates that declarative intent into **code and configuration**, which runs on **standard tools** in production.
+
+![Gen AI and data engineering architecture](docs/genai-data-engineering-architecture.svg)
+
+**Interactive versions**
+
+| Where | Link |
+|-------|------|
+| Web (shareable) | [genai-data-engineering-architecture.html](docs/genai-data-engineering-architecture.html) — works in any browser; use on [GitHub Pages](https://basvdberg.github.io/data-engineering-2026/genai-data-engineering-architecture.html) for LinkedIn and social sharing |
+| Cursor IDE | [genai-data-engineering-architecture.canvas.tsx](canvases/genai-data-engineering-architecture.canvas.tsx) |
+
+The web version includes collapsible layers, clickable source boxes, and a light/dark theme. Enable **GitHub Pages** (Settings → Pages → Build from branch `main`, folder `/docs`) to publish the shareable URL.
 
 ## The role of documentation
 
@@ -66,6 +82,7 @@ The [data-solution-2026](https://github.com/basvdberg/data-solution-2026) reposi
 
 <!-- markdown-project-structure:start -->
 - [Data Engineering 2026](readme.md)
+  - Canvases
   - Docs
     - [LinkedIn post](docs/linkedin-post.md)
 - Related repositories

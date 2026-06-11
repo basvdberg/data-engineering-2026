@@ -22,12 +22,15 @@ The core idea: treat documentation and intent as fuel for GenAI, not paperwork y
 
 The repo walks through this way of working with diagrams (old vs new data-engineering cycle), links the [Design Patterns](https://github.com/basvdberg/data-engineering-design-patterns) collection, and points to a [Data Solution 2026](https://github.com/basvdberg/data-solution-2026) PoC that puts the ideas into practice. The PoC is still in progress — I will share lessons learned soon.
 
+Interactive architecture diagram (shareable in browser): <https://basvdberg.github.io/data-engineering-2026/genai-data-engineering-architecture.html>
+
 #DataEngineering #GenAI #DataArchitecture #MetadataDriven #DesignPatterns
 
 ## Project structure
 
 <!-- markdown-project-structure:start -->
 - [Data Engineering 2026](../readme.md)
+  - Canvases
   - Docs
     - [LinkedIn post](linkedin-post.md)
 - Related repositories
