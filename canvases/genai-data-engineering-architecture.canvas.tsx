@@ -169,7 +169,7 @@ function ToolChip({ name }: { name: string }) {
       style={{
         padding: "6px 12px",
         borderRadius: 6,
-        fontSize: 12,
+        fontSize: 13,
         border: `1px solid ${theme.stroke.tertiary}`,
         background: theme.bg.editor,
         color: theme.text.secondary,
@@ -188,7 +188,7 @@ export default function GenAIDataEngineeringArchitecture() {
       <Stack gap={8} style={{ alignItems: "center", textAlign: "center", maxWidth: 640 }}>
         <H1>Gen AI and Data Engineering</H1>
         <Text tone="secondary">
-          The data engineer steers a three-layer stack: declarative intent at the top, generated code in the middle, standard tools at the bottom.
+          Declarative intent → generated code → standard tools
         </Text>
       </Stack>
 
@@ -204,35 +204,21 @@ export default function GenAIDataEngineeringArchitecture() {
 
       <Layer label="Specification of intent" number={1} accent>
         <Text tone="secondary" style={{ marginBottom: 12 }}>
-          Technology-agnostic, declarative description of <em>what</em> the solution must do — not how it is built.
+          Technology-agnostic description of <em>what</em> — not how.
         </Text>
         <Row gap={12} wrap style={{ marginBottom: 12 }}>
           <SourceBox
             title="Design patterns — Generic"
             highlighted
-            items={[
-              "Separate what and how",
-              "Functional decomposition",
-              "Prefer simple decomposition",
-              "Simplicity",
-            ]}
+            items={["Separate what and how", "Functional decomposition", "Simplicity"]}
           />
           <SourceBox
             title="Design patterns — Data engineering"
-            items={[
-              "Data extractor",
-              "Data object & poller",
-              "Data solution layers",
-              "Event-based orchestration",
-            ]}
+            items={["Data extractor", "Data object & poller", "Event-based orchestration"]}
           />
           <SourceBox
             title="Documentation & standards"
-            items={[
-              "Architecture decisions",
-              "DSA metadata (transformations)",
-              "Release notes & runbooks",
-            ]}
+            items={["Architecture decisions", "DSA metadata", "Runbooks"]}
           />
         </Row>
         <Row gap={8} align="center">
@@ -241,9 +227,6 @@ export default function GenAIDataEngineeringArchitecture() {
           </Pill>
           <Pill tone="neutral" size="small">
             Technology-agnostic
-          </Pill>
-          <Pill tone="neutral" size="small">
-            AI-ready vocabulary
           </Pill>
         </Row>
       </Layer>
@@ -256,9 +239,9 @@ export default function GenAIDataEngineeringArchitecture() {
 
       <Layer label="Code and configuration" number={2}>
         <Text tone="secondary" style={{ marginBottom: 12 }}>
-          Generated and reviewed implementation — the <em>how</em> on a concrete stack.
+          Generated and reviewed implementation on a concrete stack.
         </Text>
-        <Row gap={8} wrap style={{ marginBottom: 12 }}>
+        <Row gap={8} wrap>
           {[
             "Python modules",
             "SQL & migrations",
@@ -266,21 +249,17 @@ export default function GenAIDataEngineeringArchitecture() {
             "Docker & compose",
             "CI/CD workflows",
             "Tests & hooks",
-            "Environment config",
           ].map((item) => (
             <ToolChip key={item} name={item} />
           ))}
         </Row>
-        <Text size="small" tone="tertiary">
-          Hand-written code gives way to AI-generated code, steered by the specification above.
-        </Text>
       </Layer>
 
       <ArrowDown color={theme.stroke.primary} />
 
       <Layer label="Standard tools" number={3}>
         <Text tone="secondary" style={{ marginBottom: 12 }}>
-          Proven, off-the-shelf platforms that execute the generated solution in production.
+          Off-the-shelf platforms that run the solution in production.
         </Text>
         <Row gap={8} wrap>
           {[
@@ -295,21 +274,6 @@ export default function GenAIDataEngineeringArchitecture() {
           ))}
         </Row>
       </Layer>
-
-      <div
-        style={{
-          width: "100%",
-          maxWidth: 720,
-          padding: "12px 16px",
-          borderRadius: 8,
-          border: `1px dashed ${theme.stroke.secondary}`,
-          textAlign: "center",
-        }}
-      >
-        <Text size="small" tone="tertiary">
-          Source: Data Engineering 2026 · Design patterns from data-engineering-design-patterns
-        </Text>
-      </div>
     </Stack>
   );
 }
